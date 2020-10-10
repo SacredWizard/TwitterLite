@@ -22,5 +22,7 @@ The following **bonus** features are implemented:
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
+
+
 <img src="./images/twitter-lite-1.gif" title='Video Walkthrough' alt='Video Walkthrough' width=250 /> <br>
 
