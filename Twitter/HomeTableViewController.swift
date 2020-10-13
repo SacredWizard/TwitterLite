@@ -10,6 +10,8 @@ import UIKit
 
 class HomeTableViewController: UITableViewController {
     
+    @IBOutlet var tweetTable: UITableView!
+    
     var tweetArray = [NSDictionary]()
     var numberOfTweets: Int!
     
@@ -18,15 +20,21 @@ class HomeTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadTweets()
         tweetRefreshControl.addTarget(self, action: #selector(loadTweets), for: .valueChanged)
         tableView.refreshControl = tweetRefreshControl
+        self.tweetTable.estimatedRowHeight = 140
+        self.tweetTable.rowHeight = UITableView.automaticDimension
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        loadTweets()
     }
     
     @objc func loadTweets() {
@@ -46,6 +54,8 @@ class HomeTableViewController: UITableViewController {
             print("Could not retreive tweets!")
         })
     }
+    
+    
     
     func loadMoreTweets() {
         
@@ -91,11 +101,14 @@ class HomeTableViewController: UITableViewController {
             cell.profileImageView.image = UIImage(data: imageData)
         }
         
+        cell.setFavorited((tweetArray[indexPath.row]["favorited"] as! Bool))
+        cell.tweetID = tweetArray[indexPath.row]["id"] as! Int
+        cell.setRetweeted(tweetArray[indexPath.row]["retweeted"] as!Bool)
         return cell
     }
 
     // MARK: - Table view data source
-
+ 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
